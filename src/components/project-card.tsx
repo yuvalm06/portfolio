@@ -7,13 +7,21 @@ import { ImageIcon } from "lucide-react"
 
 interface ProjectCardProps {
   title: string
-  blurb: string
+  baseDescription: string
+  focus: string
   tags: string[]
   links: { label: string; href: string }[]
-  highlight?: string
+  highlightTags?: string[]
 }
 
-export function ProjectCard({ title, blurb, tags, links, highlight }: ProjectCardProps) {
+export function ProjectCard({
+  title,
+  baseDescription,
+  focus,
+  tags,
+  links,
+  highlightTags = [],
+}: ProjectCardProps) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -52,41 +60,49 @@ export function ProjectCard({ title, blurb, tags, links, highlight }: ProjectCar
 
       {/* Card content */}
       <div className="p-6">
-        <div className="flex items-start justify-between gap-2">
-          <div className="text-lg font-semibold">{title}</div>
-          <AnimatePresence mode="wait">
-            {highlight ? (
-              <motion.span
-                key={highlight}
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.15 }}
-                className="mt-0.5 shrink-0 rounded-full bg-neutral-900 px-2 py-0.5 font-mono text-[10px] text-white dark:bg-neutral-100 dark:text-neutral-950"
-              >
-                {highlight}
-              </motion.span>
-            ) : (
-              <div className="mt-0.5 shrink-0 text-neutral-300 dark:text-neutral-700 transition-colors group-hover:text-neutral-400">
-                <ImageIcon className="h-4 w-4" />
-              </div>
-            )}
-          </AnimatePresence>
-        </div>
+        <div className="text-lg font-semibold">{title}</div>
 
         <p className="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-          {blurb}
+          {baseDescription}
         </p>
 
+        {/* Focus line */}
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={focus}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="mt-3 text-xs leading-relaxed text-neutral-500 dark:text-neutral-400"
+          >
+            <span className="font-mono text-neutral-400 dark:text-neutral-500">Focus </span>
+            {focus}
+          </motion.p>
+        </AnimatePresence>
+
         <div className="mt-4 flex flex-wrap gap-2">
-          {tags.map((t) => (
-            <span
-              key={t}
-              className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs text-neutral-700 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-200"
-            >
-              {t}
-            </span>
-          ))}
+          {tags.map((t) => {
+            const isHighlighted = highlightTags.includes(t)
+            return (
+              <motion.span
+                key={t}
+                animate={
+                  isHighlighted
+                    ? { borderColor: "rgb(23 23 23)", color: "rgb(23 23 23)" }
+                    : { borderColor: "rgb(229 229 229)", color: "rgb(115 115 115)" }
+                }
+                transition={{ duration: 0.2 }}
+                className={`rounded-full border bg-white px-2.5 py-1 text-xs dark:bg-neutral-950 ${
+                  isHighlighted
+                    ? "font-medium dark:border-neutral-400 dark:text-neutral-100"
+                    : "dark:border-neutral-800 dark:text-neutral-400"
+                }`}
+              >
+                {t}
+              </motion.span>
+            )
+          })}
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
