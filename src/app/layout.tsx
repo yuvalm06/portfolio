@@ -7,8 +7,9 @@ import { ViewModeProvider } from "@/components/view-mode-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Your Name",
-  description: "Portfolio",
+  title: "Yuval Munz — Mechanical Engineering",
+  description:
+    "Portfolio of Yuval Munz — mechanical engineering, product design, and automation systems.",
 }
 
 export default function RootLayout({

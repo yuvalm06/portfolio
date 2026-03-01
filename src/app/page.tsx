@@ -12,7 +12,9 @@ export default function HomePage() {
       <header className="sticky top-0 z-20 border-b border-neutral-200/60 bg-white/70 backdrop-blur dark:border-neutral-800/60 dark:bg-neutral-950/70">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-neutral-200 bg-white text-xs font-semibold text-neutral-700 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-300">
+              YM
+            </div>
             <div className="leading-tight">
               <div className="text-sm font-semibold">Yuval Munz</div>
               <div className="text-xs text-neutral-500 dark:text-neutral-400">
@@ -76,6 +78,17 @@ export default function HomePage() {
             rel="noopener noreferrer"
           >
             linkedin.com/in/yuvalmunz
+          </a>
+        </p>
+        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
+          GitHub:{" "}
+          <a
+            className="underline underline-offset-4"
+            href="https://github.com/yuvalm06"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            github.com/yuvalm06
           </a>
         </p>
       </section>

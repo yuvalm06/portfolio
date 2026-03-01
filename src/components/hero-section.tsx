@@ -6,14 +6,16 @@ import { HERO_COPY } from "@/lib/view-mode"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { HashLink } from "@/components/hash-link"
+import { PerspectiveImage } from "@/components/perspective-image"
 
 export function HeroSection() {
   const { mode } = useViewMode()
   const copy = HERO_COPY[mode]
 
   return (
-    <section className="mx-auto max-w-6xl px-6 pb-24 pt-28">
-      <div className="max-w-2xl">
+    <section className="mx-auto max-w-6xl overflow-hidden px-6 pb-24 pt-28">
+      <div className="flex items-center gap-8">
+        <div className="min-w-0 max-w-2xl shrink-0 flex-1">
         <Badge variant="secondary" className="mb-6">
           Available for Summer 2026
         </Badge>
@@ -50,6 +52,8 @@ export function HeroSection() {
             Building: FSAE drivetrain work • automation systems • product design • food delivery solution • design reliability OS
           </div>
         </div>
+      </div>
+        <PerspectiveImage />
       </div>
     </section>
   )

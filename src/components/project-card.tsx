@@ -1,9 +1,7 @@
 "use client"
 
-import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
-import { ImageIcon } from "lucide-react"
 
 interface ProjectCardProps {
   title: string
@@ -12,6 +10,8 @@ interface ProjectCardProps {
   tags: string[]
   links: { label: string; href: string }[]
   highlightTags?: string[]
+  isOpen?: boolean
+  onClick?: () => void
 }
 
 export function ProjectCard({
@@ -21,44 +21,23 @@ export function ProjectCard({
   tags,
   links,
   highlightTags = [],
+  isOpen = false,
+  onClick,
 }: ProjectCardProps) {
-  const [open, setOpen] = useState(false)
-
   return (
     <Card
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      className="rounded-2xl border-neutral-200/70 bg-white/70 backdrop-blur overflow-hidden transition-shadow hover:shadow-lg dark:border-neutral-800/70 dark:bg-neutral-950/60"
+      onClick={onClick}
+      className={`group relative cursor-pointer rounded-2xl border bg-white/70 backdrop-blur transition-all dark:bg-neutral-950/60 ${
+        isOpen
+          ? "border-neutral-400 shadow-lg dark:border-neutral-600"
+          : "border-neutral-200/70 hover:border-neutral-300 dark:border-neutral-800/70 dark:hover:border-neutral-700"
+      }`}
     >
-      {/* Folder panel */}
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="folder"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 110, opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 380, damping: 38 }}
-            className="overflow-hidden"
-          >
-            <div className="flex gap-2 px-4 pt-4 pb-3 bg-neutral-50/90 dark:bg-neutral-900/60 border-b border-neutral-200/70 dark:border-neutral-800/70">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="flex-1 h-16 rounded-lg border border-dashed border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 flex flex-col items-center justify-center gap-1"
-                >
-                  <ImageIcon className="h-4 w-4 text-neutral-300 dark:text-neutral-700" />
-                  <span className="font-mono text-[10px] text-neutral-300 dark:text-neutral-700">
-                    fig {i}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Hover hint */}
+      <span className="pointer-events-none absolute bottom-4 right-5 font-mono text-[10px] text-neutral-400 opacity-0 transition-opacity duration-150 group-hover:opacity-100 dark:text-neutral-600">
+        {isOpen ? "click to close" : "click for details →"}
+      </span>
 
-      {/* Card content */}
       <div className="p-6">
         <div className="text-lg font-semibold">{title}</div>
 
@@ -96,7 +75,7 @@ export function ProjectCard({
                 className={`rounded-full border bg-white px-2.5 py-1 text-xs dark:bg-neutral-950 ${
                   isHighlighted
                     ? "font-medium dark:border-neutral-400 dark:text-neutral-100"
-                    : "dark:border-neutral-800 dark:text-neutral-400"
+                    : "dark:border-neutral-700 dark:text-neutral-300"
                 }`}
               >
                 {t}
@@ -105,17 +84,22 @@ export function ProjectCard({
           })}
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-3">
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              className="text-sm text-neutral-700 underline-offset-4 hover:underline dark:text-neutral-200"
-            >
-              {l.label}
-            </a>
-          ))}
-        </div>
+        {links.filter((l) => l.href !== "#").length > 0 && (
+          <div className="mt-6 flex flex-wrap gap-3">
+            {links
+              .filter((l) => l.href !== "#")
+              .map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-sm text-neutral-700 underline-offset-4 hover:underline dark:text-neutral-200"
+                >
+                  {l.label}
+                </a>
+              ))}
+          </div>
+        )}
       </div>
     </Card>
   )
