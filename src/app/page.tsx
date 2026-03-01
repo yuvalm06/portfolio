@@ -25,11 +25,11 @@ export default function HomePage() {
 
           <div className="flex items-center gap-3">
             <nav className="hidden items-center gap-6 text-sm text-neutral-600 dark:text-neutral-300 md:flex">
-              <HashLink className="hover:text-neutral-900 dark:hover:text-white" href="#projects">
-                Projects
-              </HashLink>
               <HashLink className="hover:text-neutral-900 dark:hover:text-white" href="#about">
                 About
+              </HashLink>
+              <HashLink className="hover:text-neutral-900 dark:hover:text-white" href="#projects">
+                Projects
               </HashLink>
               <HashLink className="hover:text-neutral-900 dark:hover:text-white" href="#contact">
                 Contact
@@ -45,6 +45,10 @@ export default function HomePage() {
 
       <Separator className="mx-auto max-w-6xl" />
 
+      <AboutSection />
+
+      <Separator className="mx-auto max-w-6xl" />
+
       <section id="projects" className="mx-auto max-w-6xl px-6 py-24">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Projects</h2>
@@ -54,10 +58,6 @@ export default function HomePage() {
         </div>
         <ProjectsGrid />
       </section>
-
-      <Separator className="mx-auto max-w-6xl" />
-
-      <AboutSection />
 
       <Separator className="mx-auto max-w-6xl" />
 
